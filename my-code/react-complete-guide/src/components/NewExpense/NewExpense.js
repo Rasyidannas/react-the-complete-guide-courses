@@ -1,7 +1,7 @@
 import ExpenseForm from './ExpenseForm';
 import './NewExpense.css';
 
-const newExpense = (props) => {
+const NewExpense = (props) => {
     const saveExpenseDataHandler = (enteredExpenseData) => {
         const expenseData = {
             ...enteredExpenseData,
@@ -18,4 +18,4 @@ const newExpense = (props) => {
     </div>
 }
 
-export default newExpense;
+export default NewExpense;

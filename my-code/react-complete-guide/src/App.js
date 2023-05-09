@@ -29,6 +29,7 @@ function App() {
     },
   ];
 
+  //this is store data newExpense
   const addExpenseHandler = expense => {
     console.log('In App.js');
     console.log(expense);
