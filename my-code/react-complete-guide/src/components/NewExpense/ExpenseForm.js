@@ -2,39 +2,20 @@ import { useState } from 'react';
 import './ExpenseForm.css'
 
 const ExpenseForm = () => {
-    // this is multiple useState()
-    const [userInput, setUserInput] = useState({
-        enteredTitle: '',
-        enteredAmount: '',
-        enteredDate: ''
-    });
-    
+    const [entredTitle, setEnteredTitle] = useState('');
+    const [entredAmount, setEnteredAmount] = useState('');
+    const [entredDate, setEnteredDate] = useState('');
+
     const titleChangeHandler = (event) => {
-        // this is for always give latest state value
-        setUserInput((prevState) => {
-            return {
-                ...prevState,
-                enteredTitle: event.target.value
-            }
-        })
+        setEnteredTitle(event.target.value);
     } 
 
     const amountChangeHandler = (event) => {
-        setUserInput((prevState) => {
-            return {
-                ...prevState,
-                enteredAmount: event.target.value
-            }
-        })
+        setEnteredAmount(event.target.value);
     } 
 
     const dateChangeHandler = (event) => {
-        setUserInput((prevState) => {
-            return {
-                ...prevState,
-                enteredDate: event.target.value
-            }
-        })
+        setEnteredDate(event.target.value);
     } 
 
     return <form>
