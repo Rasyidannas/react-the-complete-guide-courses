@@ -7,6 +7,7 @@ import ExpenseDate from './ExpenseDate';
 function ExpenseItem(props) {
   //first index is old variable and second index is new variable
   const [title, setTitle] = useState(props.title);
+  console.log('ExpenseItem evaluated by React!');
 
   const clickHandler = () => {
     //set second variable in useState()
