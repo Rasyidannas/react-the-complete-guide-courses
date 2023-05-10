@@ -7,13 +7,13 @@ function App() {
       id: "e1",
       title: "Electric Fee",
       amount: 100,
-      date: new Date(2023, 3, 29),
+      date: new Date(2021, 3, 29),
     },
     {
       id: "e2",
       title: "Internet Fee",
       amount: 10,
-      date: new Date(2023, 3, 29),
+      date: new Date(2020, 3, 29),
     },
     {
       id: "e3",
