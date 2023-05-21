@@ -7,6 +7,7 @@ const AddUser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
 
+  //function for submiting form
   const addUserHandler = (event) => {
     event.preventDefault();
 
@@ -14,11 +15,11 @@ const AddUser = (props) => {
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
       return;
     }
-    //checking for age 0 and in negative
-    if (enteredAge < 1) {
+    //checking for age 0 and in negative and + is for change age to number data type
+    if (+enteredAge < 1) {
       return;
     }
-
+    props.onAddUser(enteredUsername, enteredAge);
     setEnteredUsername("");
     setEnteredAge("");
   };
