@@ -2,7 +2,7 @@ import Card from "../UI/Card";
 import classes from "./UsersList.module.css";
 
 const UsersList = (props) => {
-  console.log(props.users);
+  // console.log(props.users);
   return (
     <Card className={classes.users}>
     <ul>
