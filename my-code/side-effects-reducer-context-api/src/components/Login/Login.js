@@ -11,6 +11,16 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  //Example how useEffect work
+  // useEffect will be running when this function/component render and return will be run when function/component went/gone
+  useEffect(() => {
+    console.log("EFFECT RUNNING");
+
+    return () => {
+      console.log("EFFECT CLEANING UP");
+    }
+  }, [])
+
   // this is use effec with anounymous function with dependecies
   useEffect(() => {
     // this will just for check when user writing input done
