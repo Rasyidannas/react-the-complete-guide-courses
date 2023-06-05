@@ -21,29 +21,20 @@ const Login = (props) => {
     }
   }, [])
 
-  // this is use effec with anounymous function with dependecies
-  useEffect(() => {
-    // this will just for check when user writing input done
-    const identifier = setTimeout(() => {
-      console.log('Checking form validity!')
-      setFormIsValid(
-        enteredEmail.includes("@") && enteredPassword.trim().length > 6
-      );
-    }, 500);
-
-    //this will clear identifier and will run when user writing in input
-    return () => {
-      console.log('Clean up');
-      clearTimeout(identifier);
-    }
-  }, [enteredEmail, enteredPassword]);
-
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
+    
+    setFormIsValid(
+      event.target.value.includes("@") && enteredPassword.trim().length > 6
+    );
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
+
+    setFormIsValid(
+      enteredEmail.includes("@") && event.target.value.trim().length > 6
+    );
   };
 
   const validateEmailHandler = () => {
