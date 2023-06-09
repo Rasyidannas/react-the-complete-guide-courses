@@ -30,8 +30,8 @@ function App() {
   };
 
   return (
-    // This call React context parent
-    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn }}>
+    // This call React context parent and value will be as props in every components
+    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn, onLogout:logoutHandler }}>
       <MainHeader onLogout={logoutHandler} />
       <main>
         {!isLoggedIn && <Login onLogin={loginHandler} />}
