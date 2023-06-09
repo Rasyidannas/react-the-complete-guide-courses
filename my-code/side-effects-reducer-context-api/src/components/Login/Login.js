@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
@@ -20,11 +26,11 @@ const emailReducer = (state, action) => {
 
 const passwordReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
-    return { value: action.val, isValid: action.val.length > 6 };
+    return { value: action.val, isValid: action.val.trim().length > 6 };
   }
 
   if (action.type === "USER_BLUR") {
-    return { value: state.val, isValid: state.val.length > 6 };
+    return { value: state.val, isValid: state.val.trim().length > 6 };
   }
 
   return { value: "", isValid: false };
@@ -38,13 +44,16 @@ const Login = (props) => {
   // useReducer for complex usestate or manage useState
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: "",
-    isValid: false,
+    isValid: null,
   });
 
   const [passState, dispatchPass] = useReducer(passwordReducer, {
     value: "",
-    isValid: false,
+    isValid: null,
   });
+
+  const emailInputRef = useRef();
+  const passInputRef = useRef();
 
   //Example how useEffect work
   // useEffect will be running when this function/component render and return will be run when function/component went/gone and avoid lopping render
@@ -94,13 +103,21 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    authCtx.onLogin(emailState.value, passState.value);
+    //this is for logic form and focus field input
+    if (formIsValid) {
+      authCtx.onLogin(emailState.value, passState.value);
+    } else if (!emailIsvalid) {
+      emailInputRef.current.focus()
+    } else {
+      passInputRef.current.focus()
+    }
   };
 
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <Input
+          ref={emailInputRef}
           id="email"
           label="E-mail"
           type="email"
@@ -109,8 +126,9 @@ const Login = (props) => {
           onChange={emailChangeHandler}
           onBlur={validateEmailHandler}
         />
-        
+
         <Input
+          ref={passInputRef}
           id="password"
           label="Password"
           type="password"
@@ -119,9 +137,9 @@ const Login = (props) => {
           onChange={passwordChangeHandler}
           onBlur={validatePasswordHandler}
         />
-        
+
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>
