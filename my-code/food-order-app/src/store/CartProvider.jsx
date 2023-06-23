@@ -13,6 +13,7 @@ const CartProvider = (props) => {
   };
 
   return (
+    // this for give access all component who want it (actually for parent component)
     <CartContext.Provider value={cartContext}>
       {props.children}
     </CartContext.Provider>
