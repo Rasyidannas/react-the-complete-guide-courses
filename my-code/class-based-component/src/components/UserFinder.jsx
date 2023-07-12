@@ -3,14 +3,11 @@ import { Fragment, useState, useEffect } from "react";
 import Users from "./Users";
 import classes from "./UserFinder.module.css";
 import { Component } from "react";
-
-const DUMMY_USERS = [
-  { id: "u1", name: "Max" },
-  { id: "u2", name: "Manuel" },
-  { id: "u3", name: "Julie" },
-];
+import UsersContext from "../store/users-context";
 
 class UserFinder extends Component {
+  static contextType = UsersContext;
+
   constructor() {
     super();
     this.state = {
@@ -22,7 +19,7 @@ class UserFinder extends Component {
   //this is lifecyle for mount(actually for API) and only run once same with useEffect(...func, [])
   componentDidMount() {
     // Send HTTP request...
-    this.setState({ filteredUsers: DUMMY_USERS });
+    this.setState({ filteredUsers: this.context.users });//this.context can acces to contextType for user-context.jsx
   }
 
   //this is lifecycle methods same with useEffect(...func, [searchTerm])
@@ -30,7 +27,7 @@ class UserFinder extends Component {
     // this is avoid for infinity loop
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
-        filteredUsers: DUMMY_USERS.filter((user) =>
+        filteredUsers: this.context.users.filter((user) =>
           user.name.includes(this.statesearchTerm)
         ),
       });
