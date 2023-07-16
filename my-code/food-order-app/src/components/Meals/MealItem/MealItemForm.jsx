@@ -22,6 +22,7 @@ const MealItemForm = (props) => {
       return;
     }
 
+    // store enteredAmountNumber
     props.onAddToCart(enteredAmountNumber);
   };
 
@@ -40,6 +41,7 @@ const MealItemForm = (props) => {
         }}
       />
       <button>Add</button>
+      {/* Error Message is user input more 5 items */}
       {!amountIsValid && <p>Please enter a valid amount (1-5).</p>}
     </form>
   );

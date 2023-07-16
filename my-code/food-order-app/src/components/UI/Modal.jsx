@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import ReactDOM from "react-dom";
 import classes from "./Modal.module.css";
 
+//this is for bg pop up/modal
 const Backdrop = (props) => {
     return <div className={classes.backdrop} onClick={props.onClose}></div>
 };
@@ -12,7 +13,7 @@ const ModalOverlay = (props) => {
     </div>
 };
 
-const portalElement = document.getElementById('overlays')
+const portalElement = document.getElementById('overlays');
 
 const Modal = (props) => {
   return <Fragment>

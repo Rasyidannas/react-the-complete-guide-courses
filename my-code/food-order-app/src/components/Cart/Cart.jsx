@@ -8,6 +8,7 @@ import CartItem from "./CartItem";
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
 
+  // this toFixed make number to 2 digits behind coma
   const totalAmount = `${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
 
@@ -19,6 +20,7 @@ const Cart = (props) => {
     cartCtx.addItem({...item, amount: 1})
   };
 
+  //this is take from cartCtx.items using map()
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {cartCtx.items.map((item) => (

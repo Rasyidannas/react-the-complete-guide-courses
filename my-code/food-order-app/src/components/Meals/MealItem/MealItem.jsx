@@ -8,6 +8,7 @@ const MealItem = (props) => {
 
   const price = `$${props.price.toFixed(2)}`;
 
+  //this funtion will add in CartProvider/car-context.jsx
   const addToCartHandler = amount => {
     cartCtx.addItem({
       id: props.id,

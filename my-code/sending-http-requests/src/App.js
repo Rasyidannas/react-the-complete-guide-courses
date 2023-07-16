@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
+import AddMovie from './components/AddMovie';
 import "./App.css";
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch("https://reasct-http-39dc5-default-rtdb.firebaseio.com/movies.json");
 
       //this is for response not successfull
       if (!response.ok) {
@@ -37,13 +38,16 @@ function App() {
       setError(error.message);
     }
     setIsLoading(false);
-  }, [])
-  
+  }, []);
+
   //this is for avoid infinity loop/rerender for fetchMoviesHandler
   useEffect(() => {
     fetchMoviesHandler();
-  }, [fetchMoviesHandler])
+  }, [fetchMoviesHandler]);
 
+  async function addMovieHandler(movie) {
+    console.log();
+  }
 
   let content = <p>Found no movies.</p>;
 
@@ -61,6 +65,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>

@@ -17,6 +17,7 @@ function App() {
 
   return (
     <CartProvider>
+      {/* this is for popup cart */}
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
       <main>
