@@ -40,6 +40,7 @@ const SimpleInput = (props) => {
 
     //this is for reseting after success input
     resetNameInput();
+    resetEmailInput();
   };
 
   const nameInputClasses = nameInputHasError
