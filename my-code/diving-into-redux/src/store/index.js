@@ -4,9 +4,13 @@ const initialState = { counter: 0, showCounter: true };
 
 const counterReducer = (state = initialState, action) => {
   if (action.type === "increment") {
+    //don't do this because it will make bug
+    // state.counter++;
+
+    //do this for make new object for redux
     return {
       counter: state.counter + 1,
-      showCounter: state.showCounter,
+      showCounter: state.showCounter // this is a new property added to the store!
     };
   }
 
