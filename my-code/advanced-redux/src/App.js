@@ -16,18 +16,22 @@ function App() {
   //this is call in cart-slice
   const cart = useSelector((state) => state.cart);
 
+  //this is for get data API
   useEffect(() => {
-    dispatch(fetchCartData())
-  }, [dispatch])
+    dispatch(fetchCartData());
+  }, [dispatch]);
 
+  //this is for send data API
   useEffect(() => {
     if (isInitial) {
       isInitial = false;
       return;
     }
 
-    //this is for access Action Creator in cart-slice (action creator is almost like closure function but need for return in another function)
-    dispatch(sendCartData(cart));
+    if (cart.changed) {
+      //this is for access Action Creator in cart-slice (action creator is almost like closure function but need for return in another function)
+      dispatch(sendCartData(cart));
+    }
   }, [cart, dispatch]);
 
   return (

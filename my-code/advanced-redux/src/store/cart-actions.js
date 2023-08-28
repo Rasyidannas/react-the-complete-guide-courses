@@ -15,12 +15,15 @@ export const fetchCartData = () => {
 
       const data = await response.json();
 
-      return data
+      return data;
     };
 
     try {
-      const cartData = await fetchData()
-      dispatch(cartActions.replaceCart(cartData))
+      const cartData = await fetchData();
+      dispatch(cartActions.replaceCart({
+        items: cartData.items || [],//for avoid error when 0 items in firebase
+        totalQuantity: cartData.totalQuantity
+      }));
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -49,7 +52,10 @@ export const sendCartData = (cart) => {
         "https://react-http-1a345-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json",
         {
           method: "PUT",
-          body: JSON.stringify(cart),
+          body: JSON.stringify({
+            items: cart.items,
+            totalQuantity: cart.totalQuantity,
+          }),
         }
       );
 
