@@ -9,6 +9,7 @@ const NewTask = (props) => {
   const { isLoading, error, sendRequest: sendTaskRequest } = useHttp();
 
   const createTask = (taskText, taskData) => {
+    console.log(taskData);
     const generatedId = taskData.name; // firebase-specific => "name" contains generated id
     const createdTask = { id: generatedId, text: taskText };
 
