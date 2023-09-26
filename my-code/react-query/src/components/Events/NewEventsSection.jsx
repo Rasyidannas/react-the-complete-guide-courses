@@ -9,6 +9,8 @@ export default function NewEventsSection() {
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["events"],
     queryFn: fetchEvents,
+    staleTime: 5000,//this is for refetch in 5 detik
+    gcTime: 30000//this kept data for 30 minutes
   });
 
   let content;
