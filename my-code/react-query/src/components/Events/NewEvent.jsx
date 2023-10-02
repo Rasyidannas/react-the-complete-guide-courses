@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import Modal from "../UI/Modal.jsx";
 import EventForm from "./EventForm.jsx";
-import { createNewEvent } from "../../util/http.js";
+import { createNewEvent, queryClient } from "../../util/http.js";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function NewEvent() {
@@ -11,6 +11,11 @@ export default function NewEvent() {
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createNewEvent,
+    onSuccess: () => {
+      //this is when success upload/mutation data
+      queryClient.invalidateQueries({ queryKey: ["events"] }); //this is for immediately fetch
+      navigate("/events"); //this is for redirect
+    },
   });
 
   function handleSubmit(formData) {
@@ -32,7 +37,15 @@ export default function NewEvent() {
           </>
         )}
       </EventForm>
-      {isError && <ErrorBlock title="Failed to create event" message={error.info?.message || "Failde to create event. Please check your inputs and try again later."} />}
+      {isError && (
+        <ErrorBlock
+          title="Failed to create event"
+          message={
+            error.info?.message ||
+            "Failde to create event. Please check your inputs and try again later."
+          }
+        />
+      )}
     </Modal>
   );
 }
