@@ -1,25 +1,45 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
-import Modal from "../UI/Modal.jsx";
-import EventForm from "./EventForm.jsx";
-import { fetchEvent, updateEvent } from "../../util/http.js";
-import LoadingIndicator from "../UI/LoadingIndicator.jsx";
-import ErrorBlock from "../UI/ErrorBlock.jsx";
+import Modal from '../UI/Modal.jsx';
+import EventForm from './EventForm.jsx';
+import { fetchEvent, updateEvent, queryClient } from '../../util/http.js';
+import LoadingIndicator from '../UI/LoadingIndicator.jsx';
+import ErrorBlock from '../UI/ErrorBlock.jsx';
 
 export default function EditEvent() {
-  const params = useParams();
   const navigate = useNavigate();
+  const params = useParams();
 
-  //this is for get data an event
+  //this is for get data 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events", { id: params.id }],
-    queryFn: ({ signal }) => fetchEvent({ id: params.id, signal }),
+    queryKey: ['events', {id: params.id}],
+    queryFn: ({ signal }) => fetchEvent({ signal, id: params.id }),
   });
 
-  //this is for update data
+  //this is for update data 
   const { mutate } = useMutation({
-    mutationFn: () => updateEvent(),
+    mutationFn: updateEvent,
+    onMutate: async (data) => {
+      const newEvent = data.event;//this from mutate({id:..., event:...})
+
+      //this is cancel refetch for useQuery
+      await queryClient.cancelQueries({ queryKey: ['events', {id: params.id}] });
+
+      //this is for rollback data when fail
+      const previousEvent = queryClient.getQueryData(['events', {id: params.id}]);
+
+      //this is optimistic update
+      queryClient.setQueryData(['events', {id: params.id}], newEvent);
+
+      return { previousEvent };
+    },
+    onError: (error, data, context) => {
+      queryClient.setQueryData(['events', {id: params.id}], context.previousEvent);//context.previousEvent from onMutate
+    },
+    onSettled: () => {// Always refetch after error or success
+      queryClient.invalidateQueries(['events', {id: params.id}]);
+    }
   });
 
   function handleSubmit(formData) {
@@ -28,7 +48,7 @@ export default function EditEvent() {
   }
 
   function handleClose() {
-    navigate("../");
+    navigate('../');
   }
 
   let content;
@@ -48,7 +68,7 @@ export default function EditEvent() {
           title="Failed to load event"
           message={
             error.info?.message ||
-            "Failed to load event. Please check your inputs and try again later."
+            'Failed to load event. Please check your inputs and try again later.'
           }
         />
         <div className="form-actions">
