@@ -7,9 +7,9 @@ import { fetchEvents } from "../../util/http.js";
 
 export default function NewEventsSection() {
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
-    staleTime: 5000,//this is for refetch in 5 detik
+    queryKey: ["events", { max: 3 }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),//queryKey[1] = 3
+    staleTime: 5000, //this is for refetch in 5 detik
     //gcTime: 30000//this kept data for 30 minutes
   });
 
@@ -22,7 +22,10 @@ export default function NewEventsSection() {
   if (isError) {
     content = (
       //error.info is from utils/http.js
-      <ErrorBlock title="An error occurred" message={error.info?.message || 'Failed to fetch events.'} />//error.info? --> this is for check if error.info not undefined
+      <ErrorBlock
+        title="An error occurred"
+        message={error.info?.message || "Failed to fetch events."}
+      /> //error.info? --> this is for check if error.info not undefined
     );
   }
 
