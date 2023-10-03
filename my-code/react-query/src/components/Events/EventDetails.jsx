@@ -18,7 +18,7 @@ export default function EventDetails() {
   const { mutate } = useMutation({
     mutationFn: deleteEvent, // TODO: implement delete event mutation
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["events"] }); //this is  immediately fetch when database changed
+      queryClient.invalidateQueries({ queryKey: ["events"], refetchType: "none" }); //this is immediately fetch when database changed
       navigate("/events");
     },
   });
