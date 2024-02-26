@@ -56,7 +56,7 @@ const Cart = (props) => {
           name={item.name}
           amount={item.amount}
           price={item.price}
-          onRemove={cartItemRemoveHandler.bind(null, item.id)} //this can give default params when not executed and give prams when after executed
+          onRemove={cartItemRemoveHandler.bind(null, item.id)} //this can give default params when do executed
           onAdd={cartItemAddHandler.bind(null, item)}
         />
       ))}
